@@ -25,12 +25,18 @@ export default function Home() {
     );
   }, []);
 
-  {
-    hovered === 'left'
-    &&
-    gsap.to("#main-heading", { x: 200 })
+  useEffect(() => {
+    if (hovered === 'left') {
+      gsap.to("#main-heading", { x: 300 })
+    }
+    else if (hovered === 'right') {
+      gsap.to("#main-heading", { x: -300 })
+    }
+    else {
+      gsap.to("#main-heading", { x: 0 })
+    }
+  },[hovered])
 
-  }
   return (
     <div className="max-sm:scale-[0.75] max-sm:origin-center max-sm:p-6">
       <div className="flex flex-col items-center justify-center h-[71dvh] md:fixed md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
@@ -43,7 +49,7 @@ export default function Home() {
         <div id="main-heading" className="relative z-10 text-center">
           <h1
             id="main-title"
-            className="text-[60px] text-[#1A1B1C] lg:text-[100px] font-inter font-normal tracking-tighter leading-none opacity-0"
+            className={`text-[60px] text-[#1A1B1C] lg:text-[100px] font-inter font-normal tracking-tighter leading-none opacity-0 transition-all duration-300 ease-in-out ${hovered === 'left' && 'text-right'} ${hovered === 'right' && 'text-left'}`}
             style={{
               translate: "none",
               rotate: "none",
