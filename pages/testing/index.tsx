@@ -5,6 +5,7 @@ import small from "../../assets/diamond-small.svg";
 import Image from "next/image";
 import { gsap } from "gsap";
 import Link from "next/link";
+import { GoDotFill } from "react-icons/go";
 
 
 const index = () => {
@@ -21,9 +22,23 @@ const index = () => {
   gsap.to("#diamondLarge", { rotation: "+=360", duration: 50, repeat: -1, ease: "linear" });
   gsap.to("#diamondMedium", { rotation: "+=360", duration: 75, repeat: -1, ease: "linear" });
   gsap.to("#diamondSmall", { rotation: "+=360", duration: 85, repeat: -1, ease: "linear" });
+
 }, []);
 
-const handleSubmit = async (e) => {
+useEffect(() => {
+gsap.to(".dot", {
+  y: -10,
+  duration: 0.4,
+  stagger: {
+    each: 0.15,
+    repeat: -1,
+    yoyo: true
+  },
+  ease: "power1.inOut"
+});
+},[loading])
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (step === 'one' && name.trim()) {
         setStep('two');
@@ -42,9 +57,11 @@ const handleSubmit = async (e) => {
             )
             const data = await res.json();
             console.log(data);
+            console.log("SUCESSFULLY ADDED:", name, "from", location);
             localStorage.setItem("userData", JSON.stringify({ name, location }));
         } finally {
             setLoading(false)
+            setStep('three')
         }
     }
 
@@ -56,11 +73,23 @@ const handleSubmit = async (e) => {
       </div>
       <div className="relative flex flex-col items-center justify-center mb-40 w-full h-full">
         {
+            step === 'three'
+            ?
+            <div className='flex flex-col items-center gap-4 z-10'>
+                <p className='text-2xl font-normal text-[#1A1B1C] tracking-wide'>Thank you!</p>
+                <p className='text-lg text-gray-600'>Proceed for the next step</p>
+            </div>
+            :
+        (
             loading
             ?
             <div className='relative z-10'>
-                <p>Processing Submission</p>
-
+                <p className='text-lg text-gray-500 mb-2'>Processing Submission</p>
+                <div className='flex items-center justify-center space-x-4 py-8'>
+                    <GoDotFill className='dot' />
+                    <GoDotFill className='dot'/>
+                    <GoDotFill className='dot'/>
+                </div>
             </div>
             :
             <>
@@ -83,7 +112,7 @@ const handleSubmit = async (e) => {
           </button>
         </form>
         </>
-        }
+  )}
         <Image
           src={large}
           alt="Diamond background"
@@ -127,6 +156,22 @@ const handleSubmit = async (e) => {
             </div>
         </div>
         </Link>
+        {
+            step === 'three'
+            &&
+            <Link href='/result' className='inline-block'>
+                <div>
+                    <div className='w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden'>
+                        <span className='rotate-[-45deg] text-xs font-semibold sm:hidden'>PROCEED</span>
+                    </div>
+                    <div className='group hidden sm:flex flex-row relative justify-center items-center'>
+                        <span className='text-sm font-semibold hidden sm:block mr-5'>PROCEED</span>
+                        <div className='w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300'></div>
+                        <span className='absolute right-[15px] bottom-[13px] scale-[0.9] hidden sm:block group-hover:scale-[0.92] ease duration-300'>▶</span>
+                    </div>
+                </div>
+            </Link>
+        }
       </div>
     </div>
   );
