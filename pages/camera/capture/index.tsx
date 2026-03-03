@@ -4,12 +4,14 @@ import React, { useState, useEffect, useRef } from "react";
 import pic from '../../../assets/take-pic-2.svg'
 import { useDispatch } from "react-redux";
 import { setData } from "@/redux/dataSlice";
+import { useRouter } from "next/router";
 
 const index = () => {
 const [capturedImage, setCapturedImage] = useState<string | null>(null);
 const [loading, setLoading] = useState(true)
 const videoRef = useRef<HTMLVideoElement>(null);
 const dispatch = useDispatch();
+const router = useRouter();
 
   useEffect(() => {
   if (capturedImage === null) {
@@ -70,6 +72,7 @@ const uploadImage = async () => {
     console.log("API response:", data);
 
     dispatch(setData(data));
+    router.push('/select')
   } catch (error) {
     console.error("Upload failed:", error);
   }
