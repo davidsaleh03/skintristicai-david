@@ -1,12 +1,16 @@
-import Navbar from '@/components/Navbar'
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import Navbar from "@/components/Navbar";
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-  <>
-  <Navbar />
-  <Component {...pageProps} />
-  </>
-  )
+    <>
+      <Provider store={store}>
+        <Navbar />
+        <Component {...pageProps} />
+      </Provider>
+    </>
+  );
 }
