@@ -2,12 +2,17 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import button from "../assets/radio-button.svg";
 
-const Race = () => {
+interface RaceProps {
+  data: any; 
+}
+
+const Race: React.FC<RaceProps> = ({ data }) => {
     const [selector, useSelector] = useState('one')
     const [percentage, setPercentage] = useState(84);
     const radius = 49.15;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
 
   return (
     <>
