@@ -8,28 +8,30 @@ import gallery from "../../assets/gallery-icon.svg";
 import vector1 from "../../assets/vector1.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const index = () => {
   const [allow, setAllow] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
-    gsap.set("#diamondLarge", { rotation: 180 });
-    gsap.set("#diamondMedium", { rotation: 185 });
-    gsap.set("#diamondSmall", { rotation: 0 });
+    gsap.set(".diamondLarge", { rotation: 180 });
+    gsap.set(".diamondMedium", { rotation: 185 });
+    gsap.set(".diamondSmall", { rotation: 0 });
 
-    gsap.to("#diamondLarge", {
+    gsap.to(".diamondLarge", {
       rotation: "+=360",
       duration: 50,
       repeat: -1,
       ease: "linear",
     });
-    gsap.to("#diamondMedium", {
+    gsap.to(".diamondMedium", {
       rotation: "+=360",
       duration: 75,
       repeat: -1,
       ease: "linear",
     });
-    gsap.to("#diamondSmall", {
+    gsap.to(".diamondSmall", {
       rotation: "+=360",
       duration: 85,
       repeat: -1,
@@ -47,29 +49,26 @@ const index = () => {
           <Image
             src={large}
             alt="Diamond background"
-            id="diamondLarge"
             loading="lazy"
             decoding="async"
             data-nimg="1"
-            className="absolute w-[270px] h-[270px] md:w-[482px] md:h-[482px] animate-spin-slow rotate-205"
+            className="diamondLarge absolute w-[270px] h-[270px] md:w-[482px] md:h-[482px] animate-spin-slow rotate-205"
           />
           <Image
             src={medium}
             alt="Diamond background"
-            id="diamondMedium"
             loading="lazy"
             decoding="async"
             data-nimg="1"
-            className="absolute w-[230px] h-[230px] md:w-[444.34px] md:h-[444.34px] animate-spin-slower rotate-195"
+            className="diamondMedium absolute w-[230px] h-[230px] md:w-[444.34px] md:h-[444.34px] animate-spin-slower rotate-195"
           />
           <Image
             src={small}
             alt="Diamond background"
-            id="diamondSmall"
             loading="lazy"
             decoding="async"
             data-nimg="1"
-            className="absolute w-[190px] h-[190px] md:w-[405.18px] md:h-[405.18px] animate-spin-slowest"
+            className="diamondSmall absolute w-[190px] h-[190px] md:w-[405.18px] md:h-[405.18px] animate-spin-slowest"
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <Image
@@ -96,23 +95,6 @@ const index = () => {
                 className="absolute hidden md:block md:right-[143px] md:top-[20px]"
               />
             </div>
-            {allow && (
-            <div className="absolute md:top-[43%] md:left-[360px] w-[352px] z-50 fixed md:fixed">
-                <div className="bg-[#1A1B1C] pt-4 pb-2">
-                  <h2 className="text-[#FCFCFC] text-base font-semibold mb-12 leading-[24px] pl-4">
-                    ALLOW A.I. TO ACCESS YOUR CAMERA
-                  </h2>
-                  <div className="flex mt-4 border-t border-[#FCFCFC] pt-2">
-                    <button onClick={() => setAllow(false)} className="px-7  text-[#fcfcfca1] font-normal text-sm leading-4 tracking-tight cursor-pointer hover:text-gray-500">
-                      DENY
-                    </button>
-                    <button className="px-5 text-[#FCFCFC] font-semibold text-sm leading-4 tracking-tight cursor-pointer hover:text-gray-300">
-                      ALLOW
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
         <div className="relative md:absolute md:left-[45%] lg:left-[50%] xl:left-[55%] flex flex-col items-center mt-12 md:mt-0 justify-center md:-translate-y-[0%] -translate-y-[10%] transition-opacity duration-300 opacity-100 z-10">
@@ -120,31 +102,28 @@ const index = () => {
           <Image
             src={large}
             alt="Diamond background"
-            id="diamondLarge"
             loading="lazy"
             decoding="async"
             data-nimg="1"
-            className="absolute w-[270px] h-[270px] md:w-[482px] md:h-[482px] animate-spin-slow rotate-200"
+            className="diamondLarge absolute w-[270px] h-[270px] md:w-[482px] md:h-[482px] rotate-205"
           />
           <Image
             src={medium}
             alt="Diamond background"
-            id="diamondMedium"
             loading="lazy"
             decoding="async"
             data-nimg="1"
-            className="absolute w-[230px] h-[230px] md:w-[444.34px] md:h-[444.34px] animate-spin-slower rotate-190"
+            className="diamondMedium absolute w-[230px] h-[230px] md:w-[444.34px] md:h-[444.34px] rotate-195"
           />
           <Image
             src={small}
             alt="Diamond background"
-            id="diamondSmall"
             loading="lazy"
             decoding="async"
             data-nimg="1"
-            className="absolute w-[190px] h-[190px] md:w-[405.18px] md:h-[405.18px] animate-spin-slowest"
+            className="diamondSmall absolute w-[190px] h-[190px] md:w-[405.18px] md:h-[405.18px]"
           />
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+          <div className={`fixed inset-0 flex flex-col items-center justify-center ${allow ? 'z-[-1] pointer-events-none opacity-50' : 'z-10 opacity-100'}`}>
             <Image
               src={gallery}
               alt="gallery"
@@ -153,7 +132,7 @@ const index = () => {
               data-nimg="1"
               className="absolute z-0 w-[100px] h-[100px] md:w-[136px] md:h-[136px] hover:scale-110 duration-700 ease-in-out cursor-pointer"
             />
-            <div className="absolute top-[75%] md:top-[70%] md:left-[17px] translate-y-[-10px]">
+            <div className="absolute top-[75%] md:top-[70%] md:left-[17px] translate-y-[-10px] z-[10]">
               <p className="text-[12px] md:text-[14px] font-normal mt-2 leading-[24px] text-right">
                 ALLOW A.I.
                 <br />
@@ -198,6 +177,31 @@ const index = () => {
           </Link>
         </div>
       </div>
+      {allow && (
+        <div className="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center">
+          <div className="bg-[#1A1B1C] w-[352px] rounded-md overflow-hidden">
+            <h2 className="text-white text-base font-semibold p-4">
+              ALLOW A.I. TO ACCESS YOUR CAMERA
+            </h2>
+
+            <div className="flex border-t border-white/30">
+              <button
+                onClick={() => setAllow(false)}
+                className="flex-1 py-3 text-white/70 hover:text-white"
+              >
+                DENY
+              </button>
+
+              <button
+                onClick={() => router.push("/camera/capture")}
+                className="flex-1 py-3 font-semibold text-white hover:text-gray-300"
+              >
+                ALLOW
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
