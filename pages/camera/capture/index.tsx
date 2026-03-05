@@ -20,10 +20,12 @@ const router = useRouter();
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          setLoading(false)
         }
       } catch (error) {
         console.error("Error accessing camera:", error);
+      }
+      finally {
+        setLoading(false)
       }
     };
     startCamera();
@@ -92,25 +94,19 @@ const uploadImage = async () => {
             className="absolute inset-0 w-full h-full object-cover"
           />
           {
-            !loading 
-            &&
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 flex items-center space-x-3">
-            <div className="font-semibold text-sm tracking-tight leading-[14px] text-[#FCFCFC] hidden sm:block"></div>
-            <div className="transform hover:scale-105 ease-in-out duration-300">
-              <Image
-                src={pic}
-                className="w-16 h-16 cursor-pointer"
-                loading="lazy"
-                width={250}
-                height={250}
-                data-nimg="1"
-                decoding="async"
-                alt="camera"
-                onClick={capturePhoto}
-              />
-            </div>
-          </div>
-          }
+  videoRef.current?.srcObject &&
+  <div className="absolute right-8 top-1/2 ...">
+    <Image
+      src={pic}
+      className="w-16 h-16 cursor-pointer"
+      loading="lazy"
+      width={250}
+      height={250}
+      alt="camera"
+      onClick={capturePhoto}
+    />
+  </div>
+}
           <div className='absolute bottom-30 sm:bottom-40 left-0 right-0 text-center z-20'>
             <p className='text-sm mb-2 font-normal leading-6 text-[#FCFCFC]'>TO GET BETTER RESULTS MAKE SURE TO HAVE</p>
             <div className='flex justify-center space-x-8 text-xs leading-6 text-[#FCFCFC]'>
