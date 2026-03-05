@@ -62,7 +62,7 @@ const index = () => {
                   }
                 }
       }, [allData]);
-      
+
 if (!allData) {
   return null;
 }
@@ -84,21 +84,21 @@ if (!allData) {
           <div className="grid md:grid-cols-[1.5fr_8.5fr_3.15fr] gap-4 mt-10 mb-40 md:gap-4 pb-0 md:pb-0 md:mb-0">
             <div className="bg-white-100 space-y-3 md:flex md:flex-col h-[62%]">
               <div
-                className={`p-3 cursor-pointer  ${selector === "one" ? "bg-[#1A1B1C] text-white hover:bg-black" : "bg-[#F3F3F4]"}  flex-1 flex flex-col justify-between hover:bg-[#E1E1E2] border-t`}
+                className={`p-3 cursor-pointer  ${selector === "one" ? "bg-[#1A1B1C] text-white hover:bg-black" : "bg-[#F3F3F4]"}  flex-1 flex flex-col justify-between hover:bg-[#E1E1E2] border-t border-black`}
                 onClick={() => setSelector("one")}
               >
                 <p className="text-base font-semibold">{selectedRace && capitalizeWord(selectedRace)}</p>
                 <h4 className="text-base font-semibold mb-1">RACE</h4>
               </div>
               <div
-                className={`p-3 cursor-pointer  ${selector === "two" ? "bg-[#1A1B1C] text-white hover:bg-black" : "bg-[#F3F3F4]"} flex-1 flex flex-col justify-between hover:bg-[#E1E1E2] border-t`}
+                className={`p-3 cursor-pointer  ${selector === "two" ? "bg-[#1A1B1C] text-white hover:bg-black" : "bg-[#F3F3F4]"} flex-1 flex flex-col justify-between hover:bg-[#E1E1E2] border-t border-black`}
                 onClick={() => setSelector("two")}
               >
                 <p className="text-base font-semibold">{selectedAge && capitalizeWord(selectedAge)}</p>
                 <h4 className="text-base font-semibold mb-1">AGE</h4>
               </div>
               <div
-                className={`p-3 cursor-pointer  ${selector === "three" ? "bg-[#1A1B1C] text-white hover:bg-black" : "bg-[#F3F3F4]"} flex-1 flex flex-col justify-between hover:bg-[#E1E1E2] border-t`}
+                className={`p-3 cursor-pointer  ${selector === "three" ? "bg-[#1A1B1C] text-white hover:bg-black" : "bg-[#F3F3F4]"} flex-1 flex flex-col justify-between hover:bg-[#E1E1E2] border-t border-black`}
                 onClick={() => setSelector("three")}
               >
                 <p className="text-base font-semibold">{selectedGender && capitalizeWord(selectedGender)}</p>

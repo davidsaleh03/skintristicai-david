@@ -16,12 +16,16 @@ interface AgeProps {
 }
 
 const Age: React.FC<AgeProps> = ({ allData }) => {
-    const [percentage, setPercentage] = useState(84);
           const radius = 49.15;
           const circumference = 2 * Math.PI * radius;
-          const strokeDashoffset = circumference - (percentage / 100) * circumference;
           const selectedAge = useSelector((state: RootState) => state.age.selectedAge);
           const dispatch = useDispatch();
+
+          const percentage = selectedAge
+    ? Math.round(Number(allData.data.age[selectedAge]) * 100)
+    : 0;
+
+const strokeDashoffset = circumference - (percentage / 100) * circumference;
         
           function capitalizeWord(word: any) {
           return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
@@ -39,13 +43,12 @@ const Age: React.FC<AgeProps> = ({ allData }) => {
                   const [firstLabel, firstValue] = sorted[0];
             
                   dispatch(setSelectedAge(firstLabel));
-                  setPercentage(Math.round(Number(firstValue) * 100));
                 }
               }
             }, [allData, selectedAge, dispatch]);
   return (
     <>
-                <div className="relative bg-gray-100 p-4 flex flex-col items-center justify-center md:h-[57vh] md:border-t">
+                <div className="relative bg-gray-100 p-4 flex flex-col items-center justify-center md:h-[57vh] border-t border-black">
                   <p className="hidden md:block md:absolute text-[40px] mb-2 left-7 top-4">
                     {capitalizeWord(selectedAge)}
                   </p>
@@ -114,7 +117,7 @@ const Age: React.FC<AgeProps> = ({ allData }) => {
                     If A.I. estimate is wrong, select the correct one.
                   </p>
                 </div>
-                <div className="bg-gray-100 pt-4 pb-4 md:border-t">
+                <div className="bg-gray-100 pt-4 pb-4 border-t border-black">
                   <div className="space-y-0">
                     <div className="flex justify-between px-4">
                       <h4 className="text-base leading-[24px] tracking-tight font-medium mb-2">
@@ -135,7 +138,6 @@ const Age: React.FC<AgeProps> = ({ allData }) => {
           className={`flex items-center justify-between h-[48px] px-4 cursor-pointer ${isSelected ? 'bg-[#1A1B1C] text-white hover:bg-black' : 'hover:bg-[#E1E1E2]'}`}
           onClick={() => {
             dispatch(setSelectedAge(label));
-            setPercentage(Math.round(Number(value) * 100));
           }}
         >
           <div className="flex items-center gap-1">
