@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import large from "../../assets/diamond-large.svg";
 import medium from "../../assets/diamond-medium.svg";
 import small from "../../assets/diamond-small.svg";
