@@ -15,6 +15,7 @@ interface AgeProps {
 }
 
 const Gender: React.FC<AgeProps> = ({ allData }) => {
+    const [color, setColor] = useState(0)
      const [percentage, setPercentage] = useState(84);
               const radius = 49.15;
               const circumference = 2 * Math.PI * radius;
@@ -131,10 +132,11 @@ const Gender: React.FC<AgeProps> = ({ allData }) => {
       return (
         <div
           key={index}
-          className="flex items-center justify-between h-[48px] px-4 cursor-pointer hover:bg-[#E1E1E2]"
+          className={`flex items-center justify-between h-[48px] px-4 cursor-pointer ${color === index ? 'bg-[#1A1B1C] text-white hover:bg-black' : 'hover:bg-[#E1E1E2]'}`}
           onClick={() => {
             dispatch(setSelectedGender(label));
             setPercentage(Math.round(Number(value) * 100));
+            setColor(index);
           }}
         >
           <div className="flex items-center gap-1">
