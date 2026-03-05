@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import button from "../assets/radio-button.svg";
-import { setSelectedRace } from '@/redux/raceSlice';
+import { setSelectedAge } from '@/redux/ageSlice';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 
@@ -9,47 +9,44 @@ import { RootState } from "@/redux/store";
 interface AgeProps {
   allData: {
     data: {
-      race: Record<string, number>;
+      age: Record<string, number>;
     };
   };
 }
 
-
-const Race: React.FC<AgeProps> = ({ allData }) => {
-     const [percentage, setPercentage] = useState(84);
-      const radius = 49.15;
-      const circumference = 2 * Math.PI * radius;
-      const strokeDashoffset = circumference - (percentage / 100) * circumference;
-
-      const selectedRace = useSelector((state: RootState) => state.race.selectedRace);
-      const dispatch = useDispatch();
-    
-      function capitalizeWord(word: any) {
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    }
-    
-    function toPercentage(decimal: any) {
-    return Math.round(decimal * 100)
-    }
-
-    useEffect(() => {
-  if (allData?.data?.race) {
-    const sorted = Object.entries(allData.data.race)
-      .sort((a, b) => Number(b[1]) - Number(a[1]));
-
-    if (sorted.length > 0) {
-      const [firstLabel, firstValue] = sorted[0];
-
-      dispatch(setSelectedRace(firstLabel));
-      setPercentage(Math.round(Number(firstValue) * 100));
-    }
-  }
-}, [allData]);
+const Age: React.FC<AgeProps> = ({ allData }) => {
+    const [percentage, setPercentage] = useState(84);
+          const radius = 49.15;
+          const circumference = 2 * Math.PI * radius;
+          const strokeDashoffset = circumference - (percentage / 100) * circumference;
+          const selectedAge = useSelector((state: RootState) => state.age.selectedAge);
+          const dispatch = useDispatch();
+        
+          function capitalizeWord(word: any) {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }
+        
+        function toPercentage(decimal: any) {
+        return Math.round(decimal * 100)
+        }
+         useEffect(() => {
+              if (allData?.data?.age) {
+                const sorted = Object.entries(allData.data.age)
+                  .sort((a, b) => Number(b[1]) - Number(a[1]));
+            
+                if (sorted.length > 0) {
+                  const [firstLabel, firstValue] = sorted[0];
+            
+                  dispatch(setSelectedAge(firstLabel));
+                  setPercentage(Math.round(Number(firstValue) * 100));
+                }
+              }
+            }, [allData]);
   return (
     <>
                 <div className="relative bg-gray-100 p-4 flex flex-col items-center justify-center md:h-[57vh] md:border-t">
-                  <p className="hidden md:block md:absolute text-[40px] mb-2 left-5 top-2">
-                    {capitalizeWord(selectedRace)}
+                  <p className="hidden md:block md:absolute text-[40px] mb-2 left-7 top-4">
+                    {capitalizeWord(selectedAge)}
                   </p>
                   <div className="relative md:absolute w-full max-w-[384px] aspect-square mb-4 md:right-5 md:bottom-2">
                     <div
@@ -120,14 +117,14 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
                   <div className="space-y-0">
                     <div className="flex justify-between px-4">
                       <h4 className="text-base leading-[24px] tracking-tight font-medium mb-2">
-                        RACE
+                        AGE
                       </h4>
                       <h4 className="text-base leading-[24px] tracking-tight font-medium mb-2">
                         A.I. CONFIDENCE
                       </h4>
                     </div>
-                    {
-  Object.entries(allData.data.race)
+                   {
+  Object.entries(allData.data.age)
     .sort((a, b) => Number(b[1]) - Number(a[1]))
     .map(([label, value], index) => {
       return (
@@ -135,9 +132,9 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
           key={index}
           className="flex items-center justify-between h-[48px] px-4 cursor-pointer hover:bg-[#E1E1E2]"
           onClick={() => {
-  dispatch(setSelectedRace(label));
-  setPercentage(Math.round(Number(value) * 100));
-}}
+            dispatch(setSelectedAge(label));
+            setPercentage(Math.round(Number(value) * 100));
+          }}
         >
           <div className="flex items-center gap-1">
             <Image
@@ -165,4 +162,4 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
   )
 }
 
-export default Race
+export default Age
