@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import button from "../assets/radio-button.svg";
+import blackButton from '../assets/blackButton.svg'
 import { setSelectedRace } from '@/redux/raceSlice';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -17,7 +18,6 @@ interface AgeProps {
 
 const Race: React.FC<AgeProps> = ({ allData }) => {
      const [percentage, setPercentage] = useState(84);
-     const [color, setColor] = useState(0)
       const radius = 49.15;
       const circumference = 2 * Math.PI * radius;
       const strokeDashoffset = circumference - (percentage / 100) * circumference;
@@ -34,7 +34,7 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
     }
 
     useEffect(() => {
-  if (allData?.data?.race) {
+  if (allData?.data?.race && !selectedRace) {
     const sorted = Object.entries(allData.data.race)
       .sort((a, b) => Number(b[1]) - Number(a[1]));
 
@@ -45,7 +45,7 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
       setPercentage(Math.round(Number(firstValue) * 100));
     }
   }
-}, [allData]);
+}, [allData, selectedRace, dispatch]);
   return (
     <>
                 <div className="relative bg-gray-100 p-4 flex flex-col items-center justify-center md:h-[57vh] md:border-t">
@@ -131,17 +131,19 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
   Object.entries(allData.data.race)
     .sort((a, b) => Number(b[1]) - Number(a[1]))
     .map(([label, value], index) => {
+        const isSelected = selectedRace === label;
       return (
         <div
           key={index}
-          className={`flex items-center justify-between h-[48px] px-4 cursor-pointer ${color === index ? 'bg-[#1A1B1C] text-white hover:bg-black' : 'hover:bg-[#E1E1E2]'}`}
+          className={`flex items-center justify-between h-[48px] px-4 cursor-pointer ${isSelected ? 'bg-[#1A1B1C] text-white hover:bg-black' : 'hover:bg-[#E1E1E2]'}`}
           onClick={() => {
   dispatch(setSelectedRace(label));
   setPercentage(Math.round(Number(value) * 100));
-  setColor(index);
 }}
         >
           <div className="flex items-center gap-1">
+            { isSelected 
+            ?
             <Image
               src={button}
               width={12}
@@ -149,6 +151,14 @@ const Race: React.FC<AgeProps> = ({ allData }) => {
               className="w-[12px] h-[12px] mr-2"
               alt="button"
             />
+            :
+            <Image
+              src={blackButton}
+              width={12}
+              height={12}
+              className="w-[12px] h-[12px] mr-2"
+              alt="button"
+            />}
             <span className="font-normal text-base leading-6 tracking-tight">
               {capitalizeWord(label)}
             </span>
