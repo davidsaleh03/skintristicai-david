@@ -38,6 +38,15 @@ gsap.to(".dot", {
 });
 },[loading])
 
+useEffect(() => {
+gsap.from(".proceed-btn", {
+  opacity: 0,
+  x: -100, 
+  duration: 1, 
+  ease: "power2.out"
+});
+}, [step])
+
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (step === 'one' && name.trim()) {
@@ -159,7 +168,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         {
             step === 'three'
             &&
-            <Link href='/result' className='inline-block'>
+            <Link href='/result' className='proceed-btn inline-block'>
                 <div>
                     <div className='w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden'>
                         <span className='rotate-[-45deg] text-xs font-semibold sm:hidden'>PROCEED</span>

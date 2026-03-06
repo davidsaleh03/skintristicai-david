@@ -89,7 +89,7 @@ const index = () => {
       repeat: -1,
       ease: "linear",
     });
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
   gsap.to(".dot", {
@@ -116,31 +116,28 @@ const index = () => {
         <Image
           src={large}
           alt="Diamond background"
-          id='diamondLarge'
           loading="lazy"
           decoding="async"
           data-nimg="1"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+          className="diamondLarge absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
              w-[480px] h-[480px] md:w-[762px] md:h-[762px] 
               rotate-180"
         />
         <Image
           src={medium}
           alt="Diamond background"
-          id='diamondMedium'
           loading="lazy"
           decoding="async"
           data-nimg="1"
-          className="absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-1/2 w-[400px] h-[400px] md:w-[682px] md:h-[682px] rotate-185"
+          className="diamondMedium absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-1/2 w-[400px] h-[400px] md:w-[682px] md:h-[682px] rotate-185"
         />
         <Image
           src={small}
           alt="Diamond background"
-          id='diamondSmall'
           loading="lazy"
           decoding="async"
           data-nimg="1"
-          className="absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-1/2 w-[320px] h-[320px] md:w-[602px] md:h-[602px]"
+          className="diamondSmall absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-1/2 w-[320px] h-[320px] md:w-[602px] md:h-[602px]"
         />
         <div className='absolute bg-white p-4 space-y-0'>
             <p className='text-base font-semibold leading-6 tracking-tight'>PREPARING YOUR ANALYSIS...</p>
@@ -337,7 +334,7 @@ const index = () => {
               </button>
 
               <button
-                onClick={() => router.push("/camera/capture")}
+                onClick={() => router.push("/camera")}
                 className="flex-1 py-3 font-semibold text-white hover:text-gray-300"
               >
                 ALLOW
