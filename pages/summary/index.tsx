@@ -6,9 +6,11 @@ import { useRouter } from "next/router";
 import { setSelectedGender } from '@/redux/genderSlice';
 import { setSelectedRace } from '@/redux/raceSlice';
 import { setSelectedAge } from '@/redux/ageSlice';
+import button from '../../assets/button-simple.svg'
 import Age from "@/components/Age";
 import Gender from "@/components/Gender";
 import Race from "@/components/Race";
+import Link from "next/link";
 
 const index = () => {
   const allData = useSelector((state: RootState) => state.data.value);
@@ -68,7 +70,6 @@ if (!allData) {
 }
   return (
     <div className="h-screen md:h-[90vh] flex flex-col md:mt-5">
-      <main className="flex-1 w-full bg-white md:overflow-hidden overflow-auto">
         <div className="md:h-full max-w-full mx-5 px-4 md:px-auto flex flex-col">
           <div className="text-start ml-4 mb-4 md:mb-10 md:ml-0">
             <h2 className="text-base md:text-base font-semibold mb-1 leading-[24px]">
@@ -110,7 +111,27 @@ if (!allData) {
             {selector === "two" && <Age allData={allData}/>}
           </div>
         </div>
-      </main>
+        <div className='pt-4 md:pt-[37px] pb-6 px-4 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16'>
+            <div className='flex justify-between items-center max-w-full mx-auto px-4 md:px-0'>
+                <Link href='/select'>
+                <div>
+                    <div className='relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden'>
+                        <span className='rotate-[-45deg] text-xs font-semibold sm:hidden'>BACK</span>
+                    </div>
+                    <div className='group hidden sm:flex flex-row relative justify-center items-center'>
+                        <div className='w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300'></div>
+                        <span className='absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300'>▶</span>
+                        <span className='text-sm font-semibold hidden sm:block ml-6 '>BACK</span>
+                    </div>
+                </div>
+                </Link>
+                <Link href='/'>
+                <div className='transform hover:scale-110 transition duration-300 ease-in-out'>
+                    <Image src={button} alt='button'/>
+                </div>
+                </Link>
+            </div>
+        </div>
     </div>
   );
 };
